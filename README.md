@@ -1,0 +1,2 @@
+# spec
+The SpecLore specification
