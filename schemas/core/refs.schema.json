@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://speclore.dev/schemas/0.1.0-core/refs.schema.json",
+  "title": "SpecLore 0.1.0-core refs",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "guid",
+    "path",
+    "refs"
+  ],
+  "properties": {
+    "guid": {
+      "$ref": "https://speclore.dev/schemas/0.1.0-core/base.schema.json#/$defs/uuid"
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^(?:|[^./\\\\\\u0000-\\u001f][^/\\\\\\u0000-\\u001f]*(?:/[^./\\\\\\u0000-\\u001f][^/\\\\\\u0000-\\u001f]*)*)$(?![\\s\\S])"
+    },
+    "refs": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "https://speclore.dev/schemas/0.1.0-core/base.schema.json#/$defs/name"
+      },
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": {
+          "$ref": "https://speclore.dev/schemas/0.1.0-core/base.schema.json#/$defs/uuid"
+        }
+      }
+    }
+  }
+}

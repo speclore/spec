@@ -1,0 +1,978 @@
+{
+  "profile": "0.1.0-core",
+  "base": "examples/core-project",
+  "cases": [
+    {
+      "id": "baseline",
+      "valid": true,
+      "changes": []
+    },
+    {
+      "id": "extension-type-and-data",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "type: document",
+          "value": "type: x-requirement"
+        },
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "x-reviewer: pilot",
+          "value": "x-reviewer: {enabled: true, count: 2, note: yes}"
+        }
+      ]
+    },
+    {
+      "id": "plain-table-is-not-versions",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "The forward relation",
+          "value": "| version | author | date | comment |\n| --- | --- | --- | --- |\n| draft | anyone | not-a-date | ordinary table |\n\nThe forward relation"
+        }
+      ]
+    },
+    {
+      "id": "code-references-are-opaque",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "The forward relation",
+          "value": "`[missing](ref://ffffffff-ffff-4fff-8fff-ffffffffffff)`\n\n````text\n[also missing](missing.md)\n```\n````\n\nThe forward relation"
+        }
+      ]
+    },
+    {
+      "id": "local-anchor",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "The forward relation",
+          "value": "[This section](#one-authoritative-source)\n\nThe forward relation"
+        }
+      ]
+    },
+    {
+      "id": "reference-style-link",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "[decision](ref://44444444-4444-4444-8444-444444444444)",
+          "value": "[decision][choice]"
+        },
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "## Acceptance",
+          "value": "[choice]: ref://44444444-4444-4444-8444-444444444444\n\n## Acceptance"
+        }
+      ]
+    },
+    {
+      "id": "quoted-dates-and-yes-string",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "created: 2026-09-06T10:00:00Z",
+          "value": "created: \"2026-09-06T10:00:00Z\""
+        },
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "x-reviewer: pilot",
+          "value": "x-reviewer: yes"
+        }
+      ]
+    },
+    {
+      "id": "preserve-hard-break-and-numbered-list",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "The forward relation",
+          "value": "A hard break.  \nNext line.\n\n7. Seventh item\n8. Eighth item\n\nThe forward relation"
+        }
+      ]
+    },
+    {
+      "id": "preserve-unknown-html-and-comments",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "The forward relation",
+          "value": "<aside data-custom=\"yes\">Raw content</aside>\n\n<!-- private comment -->\n\nThe forward relation"
+        }
+      ]
+    },
+    {
+      "id": "empty-descriptor-body",
+      "valid": true,
+      "changes": []
+    },
+    {
+      "id": "duplicate-yaml-key",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "author: SpecLore",
+          "value": "author: SpecLore\nauthor: Someone"
+        }
+      ]
+    },
+    {
+      "id": "missing-author",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "author: SpecLore\n",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "missing-created",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "created: 2026-09-06T10:00:00Z\n",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "invalid-date",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "2026-09-06T10:00:00Z",
+          "value": "2026-99-06T10:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "date-without-timezone",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "created: 2026-09-06T10:00:00Z",
+          "value": "created: 2026-09-06T10:00:00"
+        }
+      ]
+    },
+    {
+      "id": "non-v4-guid",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "33333333-3333-4333-8333-333333333333",
+          "value": "33333333-3333-1333-8333-333333333333"
+        }
+      ]
+    },
+    {
+      "id": "unknown-property",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "x-reviewer: pilot",
+          "value": "reviewer: pilot"
+        }
+      ]
+    },
+    {
+      "id": "duplicate-title-authority",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "x-reviewer: pilot",
+          "value": "title: Shared contract"
+        }
+      ]
+    },
+    {
+      "id": "unprefixed-custom-type",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "type: document",
+          "value": "type: task"
+        }
+      ]
+    },
+    {
+      "id": "yaml-alias",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "x-reviewer: pilot",
+          "value": "x-reviewer: &who pilot\nx-other: *who"
+        }
+      ]
+    },
+    {
+      "id": "yaml-explicit-tag",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "x-reviewer: pilot",
+          "value": "x-reviewer: !!str pilot"
+        }
+      ]
+    },
+    {
+      "id": "yaml-nonstring-key",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "x-reviewer: pilot",
+          "value": "true: pilot"
+        }
+      ]
+    },
+    {
+      "id": "yaml-flow-frontmatter",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "content": "---\n{\"type\":\"document\"}\n---\n# Invalid\n"
+        }
+      ]
+    },
+    {
+      "id": "yaml-multiple-documents",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "x-reviewer: pilot",
+          "value": "x-reviewer: pilot\n...\nx-more: invalid"
+        }
+      ]
+    },
+    {
+      "id": "bom",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "---\nguid:",
+          "value": "﻿---\nguid:"
+        }
+      ]
+    },
+    {
+      "id": "crlf",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "---\nguid:",
+          "value": "---\r\nguid:"
+        }
+      ]
+    },
+    {
+      "id": "missing-final-lf",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "content": "---\nguid: 44444444-4444-4444-8444-444444444444\ntype: document\nauthor: SpecLore\ncreated: 2026-09-06T10:00:00Z\n---\n\n# One authoritative source\n\nThe forward relation lives in the requesting document. Its inverse is derived in _refs."
+        }
+      ]
+    },
+    {
+      "id": "duplicate-h1",
+      "valid": false,
+      "code": "C03",
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "The forward relation",
+          "value": "# Second title\n\nThe forward relation"
+        }
+      ]
+    },
+    {
+      "id": "h1-inside-fence-only",
+      "valid": false,
+      "code": "C03",
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "# One authoritative source",
+          "value": "```\n# One authoritative source\n```"
+        }
+      ]
+    },
+    {
+      "id": "preamble-before-title",
+      "valid": false,
+      "code": "C03",
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "# One authoritative source",
+          "value": "Preamble\n\n# One authoritative source"
+        }
+      ]
+    },
+    {
+      "id": "duplicate-versions",
+      "valid": false,
+      "code": "C04",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "<!-- speclore:versions -->\n\n| version | author | date | comment |\n| --- | --- | --- | --- |\n| 0.1.0 | SpecLore | 2026-09-06T10:00:00Z | Initial contract |\n",
+          "value": "<!-- speclore:versions -->\n\n| version | author | date | comment |\n| --- | --- | --- | --- |\n| 0.1.0 | SpecLore | 2026-09-06T10:00:00Z | Initial contract |\n\n<!-- speclore:versions -->\n\n| version | author | date | comment |\n| --- | --- | --- | --- |\n| 0.1.0 | SpecLore | 2026-09-06T10:00:00Z | Initial contract |\n"
+        }
+      ]
+    },
+    {
+      "id": "misplaced-versions",
+      "valid": false,
+      "code": "C04",
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "The forward relation",
+          "value": "<!-- speclore:versions -->\n\n| version | author | date | comment |\n| --- | --- | --- | --- |\n| 0.1.0 | SpecLore | 2026-09-06T10:00:00Z | Initial contract |\n\nThe forward relation"
+        }
+      ]
+    },
+    {
+      "id": "versions-without-table",
+      "valid": false,
+      "code": "C04",
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "# One authoritative source",
+          "value": "<!-- speclore:versions -->\n\n# One authoritative source"
+        }
+      ]
+    },
+    {
+      "id": "versions-wrong-columns",
+      "valid": false,
+      "code": "C04",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "| version | author | date | comment |",
+          "value": "| version | by | date | comment |"
+        }
+      ]
+    },
+    {
+      "id": "versions-invalid-row-date",
+      "valid": false,
+      "code": "C04",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "| 0.1.0 | SpecLore | 2026-09-06T10:00:00Z |",
+          "value": "| 0.1.0 | SpecLore | yesterday |"
+        }
+      ]
+    },
+    {
+      "id": "versions-extra-cell",
+      "valid": false,
+      "code": "C04",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "| Initial contract |",
+          "value": "| Initial contract | extra |"
+        }
+      ]
+    },
+    {
+      "id": "versions-no-blank-line",
+      "valid": false,
+      "code": "C04",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "<!-- speclore:versions -->\n\n",
+          "value": "<!-- speclore:versions -->\n"
+        }
+      ]
+    },
+    {
+      "id": "missing-profile",
+      "valid": false,
+      "code": "C01",
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "speclore: 0.1.0-core\n",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "wrong-profile",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "speclore: 0.1.0-core",
+          "value": "speclore: 0.2.0"
+        }
+      ]
+    },
+    {
+      "id": "nested-catalog",
+      "valid": false,
+      "code": "C01",
+      "changes": [
+        {
+          "path": "work/README.md",
+          "old": "index: 2",
+          "value": "index: 2\nrelation-types: []"
+        }
+      ]
+    },
+    {
+      "id": "structural-loose-file",
+      "valid": false,
+      "code": "C05",
+      "changes": [
+        {
+          "path": "work/extra.txt",
+          "content": "Not allowed here.\n"
+        }
+      ]
+    },
+    {
+      "id": "wrong-child-kind",
+      "valid": false,
+      "code": "C05",
+      "changes": [
+        {
+          "path": "work/README.md",
+          "old": "kind: collection\nindex: 2",
+          "value": "kind: composite"
+        }
+      ]
+    },
+    {
+      "id": "excess-notional-depth",
+      "valid": false,
+      "code": "C05",
+      "changes": [
+        {
+          "path": "work/0001-contract/assets/deeper/asset.txt",
+          "content": "too deep\n"
+        }
+      ]
+    },
+    {
+      "id": "stale-allocation-counter",
+      "valid": false,
+      "code": "C05",
+      "changes": [
+        {
+          "path": "work/README.md",
+          "old": "index: 2",
+          "value": "index: 1"
+        }
+      ]
+    },
+    {
+      "id": "duplicate-guid",
+      "valid": false,
+      "code": "C06",
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "44444444-4444-4444-8444-444444444444",
+          "value": "33333333-3333-4333-8333-333333333333"
+        }
+      ]
+    },
+    {
+      "id": "dangling-body-link",
+      "valid": false,
+      "code": "C06",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "[decision](ref://44444444-4444-4444-8444-444444444444)",
+          "value": "[decision](ref://ffffffff-ffff-4fff-8fff-ffffffffffff)"
+        }
+      ]
+    },
+    {
+      "id": "entity-path-link",
+      "valid": false,
+      "code": "C06",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "[decision](ref://44444444-4444-4444-8444-444444444444)",
+          "value": "[decision](../0002-decision/decision.md)"
+        }
+      ]
+    },
+    {
+      "id": "link-fragment-on-guid",
+      "valid": false,
+      "code": "C06",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "[decision](ref://44444444-4444-4444-8444-444444444444)",
+          "value": "[decision](ref://44444444-4444-4444-8444-444444444444#choice)"
+        }
+      ]
+    },
+    {
+      "id": "asset-outside-root",
+      "valid": false,
+      "code": "C06",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "[asset](note.txt)",
+          "value": "[asset](../../../outside.txt)"
+        }
+      ]
+    },
+    {
+      "id": "missing-asset",
+      "valid": false,
+      "code": "C06",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "[asset](note.txt)",
+          "value": "[asset](absent.png)"
+        }
+      ]
+    },
+    {
+      "id": "image-to-entity",
+      "valid": false,
+      "code": "C06",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "[decision](ref://44444444-4444-4444-8444-444444444444)",
+          "value": "![decision](ref://44444444-4444-4444-8444-444444444444)"
+        }
+      ]
+    },
+    {
+      "id": "undeclared-relation",
+      "valid": false,
+      "code": "C07",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "  depends-on:",
+          "value": "  blocks:"
+        }
+      ]
+    },
+    {
+      "id": "inverse-authored",
+      "valid": false,
+      "code": "C07",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "  depends-on:",
+          "value": "  required-by:"
+        }
+      ]
+    },
+    {
+      "id": "reserved-relation-name",
+      "valid": false,
+      "code": "C07",
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "inverse: required-by",
+          "value": "inverse: links"
+        }
+      ]
+    },
+    {
+      "id": "wrong-cardinality-shape",
+      "valid": false,
+      "code": "C07",
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "cardinality: N:N",
+          "value": "cardinality: 1:1"
+        }
+      ]
+    },
+    {
+      "id": "incoming-cardinality",
+      "valid": false,
+      "code": "C07",
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "cardinality: N:N",
+          "value": "cardinality: 1:N"
+        },
+        {
+          "path": "README.md",
+          "old": "speclore: 0.1.0-core",
+          "value": "speclore: 0.1.0-core\nrelations:\n  depends-on:\n    - ref://44444444-4444-4444-8444-444444444444"
+        }
+      ]
+    },
+    {
+      "id": "symmetric-duplicate",
+      "valid": false,
+      "code": "C07",
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "inverse: required-by",
+          "value": "inverse: depends-on"
+        },
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "type: document",
+          "value": "type: document\nrelations:\n  depends-on:\n    - ref://33333333-3333-4333-8333-333333333333"
+        }
+      ]
+    },
+    {
+      "id": "self-relation",
+      "valid": false,
+      "code": "C07",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "    - ref://44444444-4444-4444-8444-444444444444",
+          "value": "    - ref://33333333-3333-4333-8333-333333333333"
+        }
+      ]
+    },
+    {
+      "id": "duplicate-relation-member",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "    - ref://44444444-4444-4444-8444-444444444444",
+          "value": "    - ref://44444444-4444-4444-8444-444444444444\n    - ref://44444444-4444-4444-8444-444444444444"
+        }
+      ]
+    },
+    {
+      "id": "missing-index-record",
+      "valid": false,
+      "code": "C08",
+      "changes": [
+        {
+          "path": "_refs/44/44/44444444-4444-4444-8444-444444444444.json",
+          "delete": true
+        }
+      ]
+    },
+    {
+      "id": "index-wrong-path",
+      "valid": false,
+      "code": "C08",
+      "changes": [
+        {
+          "path": "_refs/44/44/44444444-4444-4444-8444-444444444444.json",
+          "old": "work/0002-decision/decision.md",
+          "value": "wrong.md"
+        }
+      ]
+    },
+    {
+      "id": "index-missing-backlink",
+      "valid": false,
+      "code": "C08",
+      "changes": [
+        {
+          "path": "_refs/44/44/44444444-4444-4444-8444-444444444444.json",
+          "content": "{\"guid\":\"44444444-4444-4444-8444-444444444444\",\"path\":\"work/0002-decision/decision.md\",\"refs\":{}}\n"
+        }
+      ]
+    },
+    {
+      "id": "index-duplicate-key",
+      "valid": false,
+      "code": "C08",
+      "changes": [
+        {
+          "path": "_refs/44/44/44444444-4444-4444-8444-444444444444.json",
+          "old": "\"guid\": \"44444444-4444-4444-8444-444444444444\"",
+          "value": "\"guid\": \"44444444-4444-4444-8444-444444444444\", \"guid\": \"44444444-4444-4444-8444-444444444444\""
+        }
+      ]
+    },
+    {
+      "id": "index-stale-record",
+      "valid": false,
+      "code": "C08",
+      "changes": [
+        {
+          "path": "_refs/ff/ff/ffffffff-ffff-4fff-8fff-ffffffffffff.json",
+          "content": "{}\n"
+        }
+      ]
+    },
+    {
+      "id": "index-nonfinite-number",
+      "valid": false,
+      "code": "C08",
+      "changes": [
+        {
+          "path": "_refs/44/44/44444444-4444-4444-8444-444444444444.json",
+          "content": "{\"guid\": NaN}\n"
+        }
+      ]
+    },
+    {
+      "id": "maximum-width-255",
+      "valid": true,
+      "changes": [],
+      "extraFolders": {
+        "parent": "work",
+        "count": 253
+      }
+    },
+    {
+      "id": "excess-width-256",
+      "valid": false,
+      "code": "C05",
+      "changes": [],
+      "extraFolders": {
+        "parent": "work",
+        "count": 254
+      }
+    },
+    {
+      "id": "one-to-one-valid",
+      "valid": true,
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "cardinality: N:N",
+          "value": "cardinality: 1:1"
+        },
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "  depends-on:\n    - ref://44444444-4444-4444-8444-444444444444",
+          "value": "  depends-on: ref://44444444-4444-4444-8444-444444444444"
+        }
+      ]
+    },
+    {
+      "id": "one-to-many-valid",
+      "valid": true,
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "cardinality: N:N",
+          "value": "cardinality: 1:N"
+        }
+      ]
+    },
+    {
+      "id": "symmetric-valid",
+      "valid": true,
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "inverse: required-by",
+          "value": "inverse: depends-on"
+        },
+        {
+          "path": "_refs/44/44/44444444-4444-4444-8444-444444444444.json",
+          "old": "\"required-by\"",
+          "value": "\"depends-on\""
+        }
+      ]
+    },
+    {
+      "id": "versions-escaped-pipe",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "Initial contract",
+          "value": "Initial \\| contract"
+        }
+      ]
+    },
+    {
+      "id": "versions-empty-comment",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "Initial contract",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "title-with-setext-spelling",
+      "valid": true,
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "# One authoritative source",
+          "value": "One authoritative source\n========================"
+        }
+      ]
+    },
+    {
+      "id": "duplicate-reserved-child-id",
+      "valid": false,
+      "code": "C05",
+      "changes": [
+        {
+          "path": "work/0001-second/note.txt",
+          "content": "Duplicate ID\n"
+        }
+      ]
+    },
+    {
+      "id": "yaml-nested-duplicate-key",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "x-reviewer: pilot",
+          "value": "x-reviewer: {name: pilot, name: agent}"
+        }
+      ]
+    },
+    {
+      "id": "numeric-overflow",
+      "valid": false,
+      "code": "C02",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "x-reviewer: pilot",
+          "value": "x-reviewer: 1e9999"
+        }
+      ]
+    },
+    {
+      "id": "empty-https-destination",
+      "valid": false,
+      "code": "C06",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "https://example.org/docs",
+          "value": "https:"
+        }
+      ]
+    },
+    {
+      "id": "missing-title",
+      "valid": false,
+      "code": "C03",
+      "changes": [
+        {
+          "path": "work/0002-decision/decision.md",
+          "old": "# One authoritative source",
+          "value": "No title"
+        }
+      ]
+    },
+    {
+      "id": "versions-rich-cell",
+      "valid": false,
+      "code": "C04",
+      "changes": [
+        {
+          "path": "work/0001-contract/spec.md",
+          "old": "Initial contract",
+          "value": "**Initial** contract"
+        }
+      ]
+    },
+    {
+      "id": "many-to-many-multiple-incoming",
+      "valid": true,
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "speclore: 0.1.0-core",
+          "value": "speclore: 0.1.0-core\nrelations:\n  depends-on:\n    - ref://44444444-4444-4444-8444-444444444444"
+        },
+        {
+          "path": "_refs/44/44/44444444-4444-4444-8444-444444444444.json",
+          "content": "{\n  \"guid\": \"44444444-4444-4444-8444-444444444444\",\n  \"path\": \"work/0002-decision/decision.md\",\n  \"refs\": {\n    \"links\": [\n      \"33333333-3333-4333-8333-333333333333\"\n    ],\n    \"required-by\": [\n      \"11111111-1111-4111-8111-111111111111\",\n      \"33333333-3333-4333-8333-333333333333\"\n    ]\n  }\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "index-unsorted-backlinks",
+      "valid": false,
+      "code": "C08",
+      "changes": [
+        {
+          "path": "README.md",
+          "old": "speclore: 0.1.0-core",
+          "value": "speclore: 0.1.0-core\nrelations:\n  depends-on:\n    - ref://44444444-4444-4444-8444-444444444444"
+        },
+        {
+          "path": "_refs/44/44/44444444-4444-4444-8444-444444444444.json",
+          "content": "{\n  \"guid\": \"44444444-4444-4444-8444-444444444444\",\n  \"path\": \"work/0002-decision/decision.md\",\n  \"refs\": {\n    \"links\": [\n      \"33333333-3333-4333-8333-333333333333\"\n    ],\n    \"required-by\": [\n      \"33333333-3333-4333-8333-333333333333\",\n      \"11111111-1111-4111-8111-111111111111\"\n    ]\n  }\n}\n"
+        }
+      ]
+    }
+  ]
+}

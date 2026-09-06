@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://speclore.dev/schemas/job.schema.json",
+  "title": "SpecLore job",
+  "description": "A queued unit of work (queue/<agent>/<guid>.json). Technical JSON; every interaction becomes a job.",
+  "type": "object",
+  "required": ["guid", "type", "agent", "source", "status", "created"],
+  "additionalProperties": false,
+  "properties": {
+    "guid": { "$ref": "document.base.schema.json#/$defs/uuid" },
+    "type": { "const": "job" },
+    "agent": { "$ref": "document.base.schema.json#/$defs/ref", "description": "Owner agent." },
+    "source": {
+      "type": "object",
+      "required": ["origin"],
+      "additionalProperties": false,
+      "properties": {
+        "origin": { "enum": ["conversation", "message", "hook", "workflow", "prompt"] },
+        "ref": { "$ref": "document.base.schema.json#/$defs/ref", "description": "The originating entity, when there is one." }
+      }
+    },
+    "request": { "type": ["string", "object"], "description": "The ask/content to process." },
+    "priority": { "type": "integer" },
+    "status": { "enum": ["queued", "running", "done", "failed", "cancelled"] },
+    "created": { "type": "string", "format": "date-time" },
+    "by": { "type": "string", "description": "Originator — an agent or the operator." },
+    "session": { "$ref": "document.base.schema.json#/$defs/ref", "description": "Bound session while running." },
+    "task": { "$ref": "document.base.schema.json#/$defs/ref", "description": "Tracking task." }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://speclore.dev/schemas/agent.schema.json",
+  "title": "SpecLore agent",
+  "description": "Frontmatter of an agent document (agents/roles/). The Markdown body carries the agent's base instructions.",
+  "allOf": [{ "$ref": "document.base.schema.json" }],
+  "type": "object",
+  "required": ["guid", "type", "name", "role"],
+  "properties": {
+    "type": { "const": "agent" },
+    "name": { "type": "string" },
+    "role": { "type": "string", "description": "e.g. developer, product-owner." },
+    "description": { "type": "string" },
+    "model": { "type": "string" },
+    "effort": { "enum": ["low", "medium", "high", "xhigh", "max"] },
+    "parallelism": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Max jobs run in parallel (capacity slots)."
+    },
+    "skills": {
+      "type": "array",
+      "items": { "$ref": "document.base.schema.json#/$defs/ref" },
+      "description": "Skills the agent may use."
+    },
+    "tools": { "type": "array", "items": { "type": "string" } },
+    "constraints": { "type": "array", "items": { "type": "string" } },
+    "scope": { "enum": ["global", "project"] }
+  }
+}

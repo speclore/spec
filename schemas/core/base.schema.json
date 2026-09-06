@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://speclore.dev/schemas/0.1.0-core/base.schema.json",
+  "title": "SpecLore 0.1.0-core base",
+  "type": "object",
+  "required": [
+    "guid",
+    "type",
+    "author",
+    "created"
+  ],
+  "properties": {
+    "guid": {
+      "$ref": "#/$defs/uuid"
+    },
+    "type": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "created": {
+      "$ref": "#/$defs/timestamp"
+    },
+    "status": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "version": {
+      "type": "string"
+    },
+    "relations": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/name"
+      },
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/ref"
+          },
+          {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/ref"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "patternProperties": {
+    "^x-[a-z][a-z0-9-]*$(?![\\s\\S])": {}
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$(?![\\s\\S])",
+      "maxLength": 36
+    },
+    "ref": {
+      "type": "string",
+      "pattern": "^ref://[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$(?![\\s\\S])",
+      "maxLength": 42
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$(?![\\s\\S])"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "inverse",
+        "cardinality",
+        "on-delete"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "inverse": {
+          "$ref": "#/$defs/name"
+        },
+        "cardinality": {
+          "enum": [
+            "1:1",
+            "1:N",
+            "N:N"
+          ]
+        },
+        "on-delete": {
+          "enum": [
+            "restrict",
+            "detach"
+          ]
+        }
+      }
+    }
+  }
+}

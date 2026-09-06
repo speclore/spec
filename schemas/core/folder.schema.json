@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://speclore.dev/schemas/0.1.0-core/folder.schema.json",
+  "title": "SpecLore 0.1.0-core folder",
+  "allOf": [
+    {
+      "$ref": "https://speclore.dev/schemas/0.1.0-core/base.schema.json"
+    },
+    {
+      "if": {
+        "required": [
+          "index"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "collection"
+          }
+        }
+      }
+    }
+  ],
+  "type": "object",
+  "required": [
+    "title",
+    "usage",
+    "kind"
+  ],
+  "properties": {
+    "type": {
+      "const": "folder"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "usage": {
+      "$ref": "https://speclore.dev/schemas/0.1.0-core/base.schema.json#/$defs/name"
+    },
+    "kind": {
+      "enum": [
+        "composite",
+        "collection"
+      ]
+    },
+    "index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "speclore": {
+      "const": "0.1.0-core"
+    },
+    "relation-types": {
+      "type": "array",
+      "items": {
+        "$ref": "https://speclore.dev/schemas/0.1.0-core/base.schema.json#/$defs/relation"
+      }
+    }
+  },
+  "unevaluatedProperties": false
+}

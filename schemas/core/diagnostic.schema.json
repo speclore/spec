@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://speclore.dev/schemas/0.1.0-core/diagnostic.schema.json",
+  "title": "SpecLore 0.1.0-core diagnostic",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "valid",
+    "diagnostics"
+  ],
+  "properties": {
+    "profile": {
+      "const": "0.1.0-core"
+    },
+    "valid": {
+      "type": "boolean"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "severity",
+          "path",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "enum": [
+              "C01",
+              "C02",
+              "C03",
+              "C04",
+              "C05",
+              "C06",
+              "C07",
+              "C08",
+              "C09",
+              "C10"
+            ]
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "guid": {
+            "$ref": "https://speclore.dev/schemas/0.1.0-core/base.schema.json#/$defs/uuid"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "diagnostics": {
+            "contains": {
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              },
+              "required": [
+                "severity"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "valid": {
+            "const": false
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "valid": {
+            "const": true
+          }
+        }
+      }
+    }
+  ]
+}

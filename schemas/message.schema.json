@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://speclore.dev/schemas/message.schema.json",
+  "title": "SpecLore message",
+  "description": "Frontmatter of a message document (messaging/<agent>/{inbox,sent,trash}/). The Markdown body is the message content; the folder is the message's state.",
+  "allOf": [{ "$ref": "document.base.schema.json" }],
+  "type": "object",
+  "required": ["guid", "type", "from", "to", "subject", "sent"],
+  "properties": {
+    "type": { "const": "message" },
+    "from": { "$ref": "document.base.schema.json#/$defs/ref" },
+    "to": { "$ref": "document.base.schema.json#/$defs/refOrList" },
+    "subject": { "type": "string" },
+    "reply-to": {
+      "$ref": "document.base.schema.json#/$defs/ref",
+      "description": "The message this replies to; chains the thread. Absent on a thread-opening message."
+    },
+    "sent": { "type": "string", "format": "date-time" }
+  }
+}

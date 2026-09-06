@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://speclore.dev/schemas/document.base.schema.json",
+  "title": "SpecLore document — base frontmatter",
+  "description": "Fields common to every SpecLore entity (document or folder descriptor). Specific types extend this via allOf.",
+  "type": "object",
+  "required": ["guid", "type"],
+  "properties": {
+    "guid": { "$ref": "#/$defs/uuid", "description": "Stable entity identity (UUID v4)." },
+    "type": { "type": "string", "description": "The entity/document type." },
+    "title": { "type": "string" },
+    "status": { "type": "string", "description": "Workflow state (type-specific vocabulary)." },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "version": { "type": "string", "description": "Current version (scalar); history lives in the body." },
+    "author": { "type": "string", "description": "Creator — a GitHub name, an agent, or a terminal profile." },
+    "created": { "type": "string", "format": "date-time" },
+    "relations": { "$ref": "#/$defs/relations" }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "ref": {
+      "type": "string",
+      "description": "A strong reference to another entity: ref://<uuid>.",
+      "pattern": "^ref://[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "refOrList": {
+      "oneOf": [
+        { "$ref": "#/$defs/ref" },
+        { "type": "array", "items": { "$ref": "#/$defs/ref" } }
+      ]
+    },
+    "relations": {
+      "type": "object",
+      "description": "Typed references to other entities, keyed by relation name; values are ref:// links.",
+      "additionalProperties": { "$ref": "#/$defs/refOrList" }
+    }
+  }
+}

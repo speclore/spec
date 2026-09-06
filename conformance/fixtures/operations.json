@@ -1,0 +1,131 @@
+{
+  "profile": "0.1.0-core",
+  "requirement": "C09",
+  "execution": "Black-box acceptance scenarios for a candidate tool. The repository release check validates scenario completeness, not runtime outcomes.",
+  "scenarios": [
+    {
+      "id": "OP01",
+      "capability": "atomic allocation",
+      "initial": "The example collection has index 2. Two clients read generation 0.",
+      "actions": [
+        "Client A reserves child 0003 at generation 0 and commits.",
+        "Client B attempts the same allocation using generation 0.",
+        "Client B refreshes and reserves the next child."
+      ],
+      "expected": [
+        "A commits generation 1 with index 3, child 0003 and its reference record.",
+        "B receives a conflict without changing any file.",
+        "B commits generation 2 with index 4 and child 0004. IDs are unique."
+      ]
+    },
+    {
+      "id": "OP02",
+      "capability": "crash recovery",
+      "initial": "The valid example snapshot is generation 0.",
+      "actions": [
+        "Begin a document move and its _refs path update.",
+        "Interrupt after each individual persistent write, in separate runs.",
+        "Restart; request a snapshot and then a new mutation."
+      ],
+      "expected": [
+        "Each recovered snapshot equals either the complete old state or the complete intended new state.",
+        "Every recovered snapshot passes C01-C08; no reader sees a torn path/index pair.",
+        "Recovery completes before accepting the next mutation."
+      ]
+    },
+    {
+      "id": "OP03",
+      "capability": "restricted deletion",
+      "initial": "The example decision has incoming depends-on and body links.",
+      "actions": [
+        "Request deletion of the decision.",
+        "Request deletion of its enclosing notional folder."
+      ],
+      "expected": [
+        "Both operations are rejected with references identifying the blockers.",
+        "Source files, index and generation remain unchanged."
+      ]
+    },
+    {
+      "id": "OP04",
+      "capability": "detach deletion",
+      "initial": "Remove the body link from the example source, set depends-on on-delete to detach and rebuild its valid index.",
+      "actions": [
+        "Delete the target decision.",
+        "Read the project snapshot."
+      ],
+      "expected": [
+        "The source's forward edge and target document are removed in one commit.",
+        "The target index record is gone, remaining records match the derived graph.",
+        "The resulting snapshot passes C01-C08."
+      ]
+    },
+    {
+      "id": "OP05",
+      "capability": "read-only scan and explicit repair",
+      "initial": "Move a document outside the tool, leaving its index path stale.",
+      "actions": [
+        "Validate/scan without requesting repair.",
+        "Approve and apply the proposed repair with the observed generation.",
+        "Apply the same now-stale proposal again."
+      ],
+      "expected": [
+        "The first operation reports C08 and changes no bytes.",
+        "Repair updates the index to the actual path without changing the document GUID.",
+        "The repeated stale proposal conflicts and changes no bytes."
+      ]
+    },
+    {
+      "id": "OP06",
+      "capability": "ambiguous import",
+      "initial": "Two authored documents declare the same GUID.",
+      "actions": [
+        "Scan with repair requested."
+      ],
+      "expected": [
+        "Report C06 and stop repair.",
+        "Do not mint replacement GUIDs, delete files or select one copy as authoritative."
+      ]
+    },
+    {
+      "id": "OP07",
+      "capability": "no-op document round trip",
+      "initial": "Each valid document from the preservation fixture list.",
+      "actions": [
+        "Read the document using the candidate tool.",
+        "Serialize without edits."
+      ],
+      "expected": [
+        "Output bytes equal input bytes, including YAML comments, quoting, hard-break spaces, list start values, fences and unknown HTML."
+      ]
+    },
+    {
+      "id": "OP08",
+      "capability": "conflicting block fallback",
+      "initial": "The duplicate-versions negative fixture.",
+      "actions": [
+        "Read with a candidate interactive reader.",
+        "Inspect diagnostics and any displayed versions property.",
+        "Serialize without an edit."
+      ],
+      "expected": [
+        "Report C04; parsing does not delete or merge blocks.",
+        "If a fallback property is displayed it is the first valid marked block.",
+        "The original two blocks remain byte-identical in the serialization."
+      ]
+    },
+    {
+      "id": "OP09",
+      "capability": "targeted edit preservation",
+      "initial": "The preserve-hard-break-and-numbered-list fixture document.",
+      "actions": [
+        "Replace only the title text using the candidate editor.",
+        "Serialize and parse the resulting document."
+      ],
+      "expected": [
+        "Only the heading's text bytes change; hard-break spaces, list start values and unrelated metadata remain identical.",
+        "The edited snapshot passes the document rules."
+      ]
+    }
+  ]
+}

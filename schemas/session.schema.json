@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://speclore.dev/schemas/session.schema.json",
+  "title": "SpecLore session record (one JSONL line)",
+  "description": "A session is a JSONL file: a header line, event lines, then a summary line when stopped.",
+  "oneOf": [
+    { "$ref": "#/$defs/header" },
+    { "$ref": "#/$defs/event" },
+    { "$ref": "#/$defs/summary" }
+  ],
+  "$defs": {
+    "header": {
+      "type": "object",
+      "required": ["kind", "guid", "agent", "started"],
+      "properties": {
+        "kind": { "const": "header" },
+        "guid": { "$ref": "document.base.schema.json#/$defs/uuid" },
+        "agent": { "$ref": "document.base.schema.json#/$defs/ref" },
+        "job": { "$ref": "document.base.schema.json#/$defs/ref" },
+        "started": { "type": "string", "format": "date-time" },
+        "model": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "event": {
+      "type": "object",
+      "required": ["kind", "ts"],
+      "properties": {
+        "kind": { "enum": ["turn", "tool", "message", "note"] },
+        "ts": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": true
+    },
+    "summary": {
+      "type": "object",
+      "required": ["kind", "ended", "status"],
+      "properties": {
+        "kind": { "const": "summary" },
+        "ended": { "type": "string", "format": "date-time" },
+        "status": { "enum": ["stopped", "failed"] },
+        "outcome": { "type": "string" },
+        "summary": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  }
+}
